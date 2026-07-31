@@ -1,20 +1,34 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        string ans="";
-        int n=s.length();
-        reverse(s.begin(), s.end());
-        for(int i=0; i<n; i++){
-            string word = "";
-            while(i<n && s[i]!=' '){
-                word+=s[i];
-                i++;
-            }
-            reverse(word.begin(),word.end());
-            if(word.length()>0){
-                ans+=(" "+word);
+
+        vector<string> words;
+        string temp = "";
+
+        // Extract words
+        for (char c : s) {
+            if (c == ' ') {
+                if (!temp.empty()) {
+                    words.push_back(temp);
+                    temp = "";
+                }
+            } else {
+                temp += c;
             }
         }
-        return ans.substr(1);       
+
+        if (!temp.empty())
+            words.push_back(temp);
+
+        // Build answer in reverse order
+        string ans = "";
+
+        for (int i = words.size() - 1; i >= 0; i--) {
+            ans += words[i];
+            if (i != 0)
+                ans += " ";
+        }
+
+        return ans;
     }
 };
